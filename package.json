@@ -19,9 +19,15 @@
   },
   "homepage": "https://github.com/Cats-Paw/Crypto-Connet#readme",
   "dependencies": {
+    "chart.js": "^2.9.4",
+    "cheerio": "^1.0.0-rc.3",
+    "cherio": "^1.0.0-rc.2",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
     "express": "^4.17.1",
     "lightweight-charts": "^3.2.0",
+    "method-override": "^3.0.0",
     "pg": "^8.5.1",
     "superagent": "^6.1.0"
   }
