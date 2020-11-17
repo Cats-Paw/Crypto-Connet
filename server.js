@@ -5,7 +5,7 @@ const cors = require('cors');
 const pg = require('pg');
 const methodOverride = require('method-override');
 const cheerio = require('cheerio');
-const chart = require('chart.js');
+const Chart = require('chart.js');
 // Environment variables
 require('dotenv').config();
 
@@ -21,7 +21,6 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 
-
 //Routes
 app.get('/', homehandler);
 
@@ -33,23 +32,32 @@ function homehandler(req, res) {
     .then(data => {
       let graphData = data.body.data.map(coin => new CMC(coin));
       console.log(graphData);
-      let chartData = [];
-      graphData.forEach((coin) => {
+      let chartData1 = [];
+      let chartData2 = [];
+      let chartData3 = [];
+      graphData.forEach((coin, idx) => {
         let oldPrice = coin.price;
-        for (let i = 0; i < 7; i++) {
-          oldPrice -= (coin.price * (coin.weeklyChange / 100 / 7));
-          chartData.push(oldPrice);
+        if (idx === 1) {
+          for (let i = 0; i < 7; i++) {
+            oldPrice -= (coin.price * (coin.weeklyChange / 100 / 7));
+            chartData1.push(oldPrice);
+          }
+        }
+        else if (idx === 2) {
+          for (let i = 0; i < 7; i++) {
+            oldPrice -= (coin.price * (coin.weeklyChange / 100 / 7));
+            chartData2.push(oldPrice);
+          }
+        }
+        else {
+          for (let i = 0; i < 7; i++) {
+            oldPrice -= (coin.price * (coin.weeklyChange / 100 / 7));
+            chartData3.push(oldPrice);
+          }
         }
       });
-      console.log(chartData);
-      // let ctx = $('#cryptoOne');
-      // let myChart = new Chart(ctx, {
-      //   type: 'bar',
-      //   data: {
-      //     labels
-      //   }
-      // })
-      res.status(200).render('pages/index');
+      console.log(chartData3);
+      res.status(200).render('pages/index', { chart: chartData3 });
     })
     .catch((error) => console.log(error));
 }

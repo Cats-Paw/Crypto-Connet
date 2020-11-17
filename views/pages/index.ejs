@@ -9,9 +9,18 @@
     <header>
     </header>
     <main>
+      <h2>test</h2>
     <canvas id='cryptoOne'></canvas>
+    <form action="">
+      <% chart.forEach( (entry,idx) => { %>
+        <% console.log(entry) %>
+        <input id='<%= idx %>' type="hidden" value="<%= entry %>">
+       <% }) %>
+    
+    </form>
     </main>
     <footer></footer>
+    <%- include('../layout/publicScript') %>
 </body>
 
 </html>
