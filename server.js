@@ -29,6 +29,8 @@ app.post('/search', searchesHandler);
 function homehandler(req, res) {
   const API = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=3`;
   const coin_market_cap = process.env.coin_market_cap;
+  const guardian = process.env.the_guardian;
+  const APItwo = `https://content.guardianapis.com/search?q=cryptocurrency&api-key=${guardian}`;
   superagent.get(API)
     .set('X-CMC_PRO_API_KEY', coin_market_cap)
     .then(data => {
@@ -61,19 +63,21 @@ function homehandler(req, res) {
       chartArray.push(chartData1);
       chartArray.push(chartData2);
       chartArray.push(chartData3);
-      res.status(200).render('pages/index', { chart: chartArray });
+      return chartArray;
     })
-    .catch((error) => console.log(error));
-  const guardian = process.env.the_guardian;
-  const APItwo = `https://content.guardianapis.com/search?q=cryptocurrency&api-key=${guardian}`;
-  superagent.get(APItwo)
-    .then(data => {
-      let NewsArr = data.body.response.results.map( article => new News(article));
-      // res.status(200).render('pages/index', {news: NewsArr}); work in progress
+    .then(chart => {
+      superagent.get(APItwo)
+        .then(data => {
+          let NewsArr = data.body.response.results.map(article => new News(article));
+          NewsArr = NewsArr.slice(0,3);
+          console.log(NewsArr);
+          res.status(200).render('pages/index', { chartdata: chart , newsData:NewsArr});
+
+        })
+        .catch((error) => console.log(error));
     })
     .catch((error) => console.log(error));
 }
-
 function searchesHandler(req, res) {
   //console.log('req.body.min_search', req.body.min_search);
 
@@ -102,7 +106,7 @@ function searchesHandler(req, res) {
           //console.log('prices', prices.quote.USD.price); WORKS
           return new CMC(prices);
         });
-        res.status(200).render('./pages/show', { results : searchResults});
+        res.status(200).render('./pages/show', { results: searchResults });
       })
       .catch((error) => console.log(error));
   }
@@ -120,9 +124,9 @@ function CMC(obj) {//CMC = coinMarketCap
   this.weeklyChange = obj.quote.USD.percent_change_7d;
 }
 
-function News(obj){
+function News(obj) {
   this.headline = obj.webTitle;
-  this.url = obj.weburl;
+  this.url = obj.webUrl;
 }
 
 //Start Server
