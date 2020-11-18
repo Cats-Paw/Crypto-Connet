@@ -31,7 +31,6 @@ function homehandler(req, res) {
     .set('X-CMC_PRO_API_KEY', coin_market_cap)
     .then(data => {
       let graphData = data.body.data.map(coin => new CMC(coin));
-      console.log(graphData);
       let chartData1 = [];
       let chartData2 = [];
       let chartData3 = [];
@@ -56,8 +55,19 @@ function homehandler(req, res) {
           }
         }
       });
-      console.log(chartData3);
-      res.status(200).render('pages/index', { chart: chartData3 });
+      let chartArray = [];
+      chartArray.push(chartData1);
+      chartArray.push(chartData2);
+      chartArray.push(chartData3);
+      res.status(200).render('pages/index', { chart: chartArray });
+    })
+    .catch((error) => console.log(error));
+  const guardian = process.env.the_guardian;
+  const APItwo = `https://content.guardianapis.com/search?q=cryptocurrency&api-key=${guardian}`;
+  superagent.get(APItwo)
+    .then(data => {
+      let NewsArr = data.body.response.results.map( article => new News(article));
+      // res.status(200).render('pages/index', {news: NewsArr}); work in progress
     })
     .catch((error) => console.log(error));
 }
@@ -70,6 +80,11 @@ function CMC(obj) {//CMC = coinMarketCap
   this.price = obj.quote.USD.price;
   this.dailyChange = obj.quote.USD.percent_change_24h;
   this.weeklyChange = obj.quote.USD.percent_change_7d;
+}
+
+function News(obj){
+  this.headline = obj.webTitle;
+  this.url = obj.weburl;
 }
 
 //Start Server
