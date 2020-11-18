@@ -24,7 +24,6 @@ app.use(methodOverride('_method'));
 //Routes
 app.get('/', homehandler);
 app.post('/search', searchesHandler);
-
 // Route Handlers
 function homehandler(req, res) {
   const API = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=3`;
@@ -72,11 +71,8 @@ function homehandler(req, res) {
           NewsArr = NewsArr.slice(0,3);
           console.log(NewsArr);
           res.status(200).render('pages/index', { chartdata: chart , newsData:NewsArr});
-
         })
         .catch((error) => console.log(error));
-    })
-    .catch((error) => console.log(error));
 }
 function searchesHandler(req, res) {
   //console.log('req.body.min_search', req.body.min_search);
@@ -128,6 +124,7 @@ function News(obj) {
   this.headline = obj.webTitle;
   this.url = obj.webUrl;
 }
+
 
 //Start Server
 client.connect()
