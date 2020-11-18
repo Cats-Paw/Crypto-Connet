@@ -23,7 +23,9 @@ app.use(methodOverride('_method'));
 
 //Routes
 app.get('/', homehandler);
+app.post('/search', searchesHandler);
 
+// Route Handlers
 function homehandler(req, res) {
   const API = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=3`;
   const coin_market_cap = process.env.coin_market_cap;
@@ -60,6 +62,42 @@ function homehandler(req, res) {
       res.status(200).render('pages/index', { chart: chartData3 });
     })
     .catch((error) => console.log(error));
+}
+
+function searchesHandler(req, res) {
+  //console.log('req.body.min_search', req.body.min_search);
+
+  const minSearch = req.body.min_search;
+  const maxSearch = req.body.max_search;
+  const ascOrDesc = req.body.ascOrDesc;
+  let ascOrDescAPI = '';
+
+  if (ascOrDesc === 'asc') {
+    ascOrDescAPI = ascOrDesc;
+  }
+  else if (ascOrDesc === 'desc') {
+    ascOrDescAPI = ascOrDesc;
+  }
+
+  if (minSearch > maxSearch) {
+    res.redirect('/');
+  } else {
+    const API = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=6&price_min=${minSearch}&price_max=${maxSearch}&sort=price&sort_dir=${ascOrDescAPI}`;
+    const coin_market_cap = process.env.coin_market_cap;
+
+    superagent.get(API)
+      .set('X-CMC_PRO_API_KEY', coin_market_cap)
+      .then(results => {
+        let searchResults = results.body.data.map(prices => {
+          //console.log('prices', prices.quote.USD.price); WORKS
+          return new CMC(prices);
+        });
+        res.status(200).render('./pages/show', { results : searchResults});
+      })
+      .catch((error) => console.log(error));
+  }
+
+
 }
 
 //Constructors

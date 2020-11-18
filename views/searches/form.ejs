@@ -1,0 +1,25 @@
+<section>
+  <form action="/search" method="POST">
+    <fieldset>
+      <legend>Enter your min and max search amount here:</legend>
+      <legend>Make sure the min amount is less than the max amount</legend>
+      <label for="min_search"> Min amount:
+        <input class="search_query" type="number" value="min_search" name="min_search">
+      </label>
+      <br>
+      <label for="max_search"> Max amount:
+        <input class="search_query" type="number" value="max_search" name="max_search">
+      </label>
+      <legend>Would you like to see prices ascending or decending?</legend>
+      <label for="ascOrDesc"> Choose ascending
+        <input class="radio_query" type="radio" value="asc" name="ascOrDesc">
+      </label>
+      <br>
+      <label for="ascOrDesc"> Choose decending
+        <input class="radio_query" type="radio" value="desc" name="ascOrDesc">
+      </label>
+      <br>
+      <button type="submit">Submit</button>
+    </fieldset>
+  </form>
+</section>
