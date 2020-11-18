@@ -6,7 +6,6 @@ const pg = require('pg');
 const methodOverride = require('method-override');
 const cheerio = require('cheerio');
 const Chart = require('chart.js');
-const { get } = require('superagent');
 // Environment variables
 require('dotenv').config();
 
@@ -15,7 +14,6 @@ const PORT = process.env.PORT || 3000;
 
 // Setup applicationapp
 const app = express();
-const guardian = process.env.the_guardian;
 const client = new pg.Client(process.env.DATABASE_URL);
 app.use(express.static('./public'));
 app.use(cors());
@@ -26,7 +24,6 @@ app.use(methodOverride('_method'));
 //Routes
 app.get('/', homehandler);
 app.post('/search', searchesHandler);
-console.log('process.env.the_guardian', process.env.the_guardian);
 // Route Handlers
 function homehandler(req, res) {
   const API = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=3`;
@@ -121,13 +118,6 @@ function CMC(obj) {//CMC = coinMarketCap
   this.dailyChange = obj.quote.USD.percent_change_24h;
   this.weeklyChange = obj.quote.USD.percent_change_7d;
 }
-
-// app.post('/search', searchHandler)
-
-// function searchHandler (req, res){
-// const search = request.body.status
-
-// }
 
 
 
