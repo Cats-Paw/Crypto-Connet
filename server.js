@@ -24,6 +24,8 @@ app.use(methodOverride('_method'));
 //Routes
 app.get('/', homehandler);
 app.post('/search', searchesHandler);
+app.post('/viewDetails/:symbol', detailsHandler);
+
 // Route Handlers
 function homehandler(req, res) {
   const API = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=3`;
@@ -73,6 +75,7 @@ function homehandler(req, res) {
           res.status(200).render('pages/index', { chartdata: chart , newsData:NewsArr});
         })
         .catch((error) => console.log(error));
+
 }
 function searchesHandler(req, res) {
   //console.log('req.body.min_search', req.body.min_search);
@@ -106,8 +109,28 @@ function searchesHandler(req, res) {
       })
       .catch((error) => console.log(error));
   }
+}
 
+function detailsHandler(req, res) {
+  //console.log('name :', req.body.name); WORKS
 
+  const coinName = req.body.name.toLowerCase();
+  console.log('name', coinName);
+  const API = `https://api.coingecko.com/api/v3/coins/${coinName}/market_chart?vs_currency=USD&days=7&interval=daily`;
+
+  superagent(API)
+    .then(results => {
+      if (results.body) {
+        let totalPrices = [];
+        results.body.prices.forEach(price => {
+          //console.log('price ', price);
+          totalPrices.push(price[1]);
+        });
+        console.log(totalPrices);
+        res.status(200).render('pages/details', { chart : totalPrices, name : coinName });
+      } else { console.log('No price data'); }
+    })
+    .catch((error) => console.log(error));
 }
 
 //Constructors
