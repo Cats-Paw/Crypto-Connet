@@ -24,7 +24,6 @@ app.use(methodOverride('_method'));
 //Routes
 app.get('/', homehandler);
 app.post('/search', searchesHandler);
-
 // Route Handlers
 function homehandler(req, res) {
   const API = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=3`;
@@ -64,7 +63,6 @@ function homehandler(req, res) {
       res.status(200).render('pages/index', { chart: chartArray });
     })
     .catch((error) => console.log(error));
-  const guardian = process.env.the_guardian;
   const APItwo = `https://content.guardianapis.com/search?q=cryptocurrency&api-key=${guardian}`;
   superagent.get(APItwo)
     .then(data => {
@@ -120,10 +118,34 @@ function CMC(obj) {//CMC = coinMarketCap
   this.weeklyChange = obj.quote.USD.percent_change_7d;
 }
 
-function News(obj){
-  this.headline = obj.webTitle;
-  this.url = obj.weburl;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Start Server
 client.connect()
