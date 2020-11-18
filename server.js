@@ -24,6 +24,7 @@ app.use(methodOverride('_method'));
 //Routes
 app.get('/', homehandler);
 app.post('/search', searchesHandler);
+app.post('/viewDetails/:symbol', detailsHandler);
 
 // Route Handlers
 function homehandler(req, res) {
@@ -68,7 +69,7 @@ function homehandler(req, res) {
   const APItwo = `https://content.guardianapis.com/search?q=cryptocurrency&api-key=${guardian}`;
   superagent.get(APItwo)
     .then(data => {
-      let NewsArr = data.body.response.results.map( article => new News(article));
+      let NewsArr = data.body.response.results.map(article => new News(article));
       // res.status(200).render('pages/index', {news: NewsArr}); work in progress
     })
     .catch((error) => console.log(error));
@@ -102,12 +103,32 @@ function searchesHandler(req, res) {
           //console.log('prices', prices.quote.USD.price); WORKS
           return new CMC(prices);
         });
-        res.status(200).render('./pages/show', { results : searchResults});
+        res.status(200).render('./pages/show', { results: searchResults });
       })
       .catch((error) => console.log(error));
   }
+}
 
+function detailsHandler(req, res) {
+  //console.log('name :', req.body.name); WORKS
 
+  const coinName = req.body.name.toLowerCase();
+  console.log('name', coinName);
+  const API = `https://api.coingecko.com/api/v3/coins/${coinName}/market_chart?vs_currency=USD&days=7&interval=daily`;
+
+  superagent(API)
+    .then(results => {
+      if (results.body) {
+        let totalPrices = [];
+        results.body.prices.forEach(price => {
+          //console.log('price ', price);
+          totalPrices.push(price[1]);
+        });
+        console.log(totalPrices);
+        res.status(200).render('pages/details', { chart : totalPrices});
+      } else { console.log('No price data'); }
+    })
+    .catch((error) => console.log(error));
 }
 
 //Constructors
@@ -120,7 +141,7 @@ function CMC(obj) {//CMC = coinMarketCap
   this.weeklyChange = obj.quote.USD.percent_change_7d;
 }
 
-function News(obj){
+function News(obj) {
   this.headline = obj.webTitle;
   this.url = obj.weburl;
 }

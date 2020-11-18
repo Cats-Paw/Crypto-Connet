@@ -8,7 +8,7 @@ function chartSetOne() {
         label: 'Ethereum',
         data: [document.getElementById('06').value, document.getElementById('05').value, document.getElementById('04').value, document.getElementById('03').value, document.getElementById('02').value, document.getElementById('01').value, document.getElementById('00').value]
       }],
-      labels: ['Day -7', 'Day -6', 'Day -5', 'Day -4', 'Day -2', 'Day -1', 'Today']
+      labels: ['Day -6', 'Day -5', 'Day -4', 'Day -3', 'Day -2', 'Day -1', 'Today']
     }
   };
 
@@ -25,7 +25,7 @@ function chartSetTwo() {
         label: 'Tether',
         data: [document.getElementById('16').value, document.getElementById('15').value, document.getElementById('14').value, document.getElementById('13').value, document.getElementById('12').value, document.getElementById('11').value, document.getElementById('10').value]
       }],
-      labels: ['Day -7', 'Day -6', 'Day -5', 'Day -4', 'Day -2', 'Day -1', 'Today']
+      labels: ['Day -6', 'Day -5', 'Day -4', 'Day -3', 'Day -2', 'Day -1', 'Today']
     }
   };
 
@@ -42,7 +42,7 @@ function chartSetThree() {
         label: 'BitCoin',
         data: [document.getElementById('26').value, document.getElementById('25').value, document.getElementById('24').value, document.getElementById('23').value, document.getElementById('22').value, document.getElementById('21').value, document.getElementById('20').value]
       }],
-      labels: ['Day -7', 'Day -6', 'Day -5', 'Day -4', 'Day -2', 'Day -1', 'Today']
+      labels: ['Day -6', 'Day -5', 'Day -4', 'Day -3', 'Day -2', 'Day -1', 'Today']
     }
   };
 
