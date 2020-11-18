@@ -75,8 +75,10 @@ function homehandler(req, res) {
           res.status(200).render('pages/index', { chartdata: chart , newsData:NewsArr});
         })
         .catch((error) => console.log(error));
-
+    })
+    .catch((error) => console.log(error));
 }
+
 function searchesHandler(req, res) {
   //console.log('req.body.min_search', req.body.min_search);
 
