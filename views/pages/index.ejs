@@ -6,15 +6,26 @@
 </head>
 
 <body>
+  <nav>
+    <div id="myNavBar" class="navBar">
+      <a href="#">Home</a>
+      <a href="#">Watchlist</a>
+  </div>
+  </nav>
     <header>
+     <%- include('../layout/header')%> 
     </header>
     <main>
       <h2>test</h2>
+    <%- include ('../searches/form') %>
     <canvas id='cryptoOne'></canvas>
+    <canvas id='cryptoTwo'></canvas>
+    <canvas id='cryptoThree'></canvas>
     <form action="">
-      <% chart.forEach( (entry,idx) => { %>
-        <% console.log(entry) %>
-        <input id='<%= idx %>' type="hidden" value="<%= entry %>">
+      <% chart.forEach( (dataSet,ind) => { %>
+        <% dataSet.forEach((entry,idx) => { %>
+        <input id='<%= ind %><%= idx %>' type="hidden" value="<%= entry %>">
+        <% }) %>
        <% }) %>
     
     </form>
