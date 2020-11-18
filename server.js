@@ -64,7 +64,6 @@ function homehandler(req, res) {
     })
     .catch((error) => console.log(error));
   const APItwo = `https://content.guardianapis.com/search?q=cryptocurrency&api-key=${guardian}`;
-  console.log('guardian', guardian);
   superagent.get(APItwo)
     .then(data => {
       let NewsArr = data.body.response.results.map( article => new News(article));
