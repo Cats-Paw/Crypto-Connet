@@ -6,6 +6,7 @@ const pg = require('pg');
 const methodOverride = require('method-override');
 const cheerio = require('cheerio');
 const Chart = require('chart.js');
+const { get } = require('superagent');
 // Environment variables
 require('dotenv').config();
 
@@ -71,6 +72,41 @@ function CMC(obj) {//CMC = coinMarketCap
   this.dailyChange = obj.quote.USD.percent_change_24h;
   this.weeklyChange = obj.quote.USD.percent_change_7d;
 }
+
+// app.post('/search', searchHandler)
+
+// function searchHandler (req, res){
+// const search = request.body.status
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Start Server
 client.connect()
