@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../layout/head') %>
+</head>
+
+<body>
+  <h2>Showing the results</h2>
+  <% results.forEach(coin => { %>
+    <div class="shown_result">
+      <h3> Coin Name: <%= coin.name %> </h3>
+      <p> Coin Symbol: <%= coin.symbol %> </p>
+      <p> Coin Price: <%= coin.price %> </p>
+      <form class="view_details" action="/viewDetails/<%= coin.symbol %>">
+        <input type="hidden" name="symbol" value="<%= coin.symbol %>">
+        <button class="save_button" type="submit">View Details</button>
+      </form>
+      <form class="save_form" action="/toSave/<%= coin.symbol %>" method="POST">
+        <input type="hidden" name="symbol" value="<%= coin.symbol %>">
+        <button class="save_button" type="submit">Add to watchlist</button>
+      </form>
+    </div>
+  <% }) %>
+  <footer></footer>
+    <%- include('../layout/publicScript') %>
+</body>
+</html>
