@@ -26,7 +26,8 @@ app.get('/', homehandler);
 app.post('/search', searchesHandler);
 app.post('/viewDetails/:symbol', detailsHandler);
 app.post('/watchList', watchlistHandler);
-app.get('/watchList', renderWatchListHandler);
+app.get('/renderWatchList', renderWatchListHandler);
+app.delete('/delete/:symbol', deleteHandler);
 
 // Route Handlers
 function homehandler(req, res) {
@@ -72,9 +73,9 @@ function homehandler(req, res) {
       superagent.get(APItwo)
         .then(data => {
           let NewsArr = data.body.response.results.map(article => new News(article));
-          NewsArr = NewsArr.slice(0,3);
+          NewsArr = NewsArr.slice(0, 3);
           console.log(NewsArr);
-          res.status(200).render('pages/index', { chartdata: chart , newsData:NewsArr});
+          res.status(200).render('pages/index', { chartdata: chart, newsData: NewsArr });
         })
         .catch((error) => console.log(error));
     })
@@ -131,35 +132,50 @@ function detailsHandler(req, res) {
           totalPrices.push(price[1]);
         });
         console.log(totalPrices);
-        res.status(200).render('pages/details', { chart : totalPrices, name : coinName });
+        res.status(200).render('pages/details', { chart: totalPrices, name: coinName });
       } else { console.log('No price data'); }
     })
     .catch((error) => console.log(error));
 }
 
-function watchlistHandler(req, res){
-  const watchlistAdd = `INSERT INTO watch (symbol) VALUES($1) RETURNING *`;
-  const params = [req.body.symbol];
+function watchlistHandler(req, res) {
+  const watchlistAdd = `INSERT INTO watch (symbol, name) VALUES($1, $2)`;
+  const symbol = req.body.symbol;
+  const name = req.body.name;
+  const params = [symbol, name];
   client.query(watchlistAdd, params)
-  .then(results =>{
-       res.status(200).redirect('/');
-  })
-  .catch((error) => console.log(error));
+    .then(results => {
+      res.status(200).redirect('/');
+    })
+    .catch((error) => console.log(error));
 };
 
-function renderWatchListHandler(req, res){
-const watchListView = `SELECT * FROM watch WHERE id = ${req.params.id}`
+function renderWatchListHandler(req, res) {
+  const watchListView = `SELECT * FROM watch`;
 
-client.query(watchListView)
- .then(results =>{
-  let watchView
+  client.query(watchListView)
+    .then(results => {
+      let watchView = results.rows;
+      res.status(200).render('pages/watchlist', { results: watchView });
 
 
 
 
-  
-})
+    })
+    .catch((error) => console.log(error));
+};
+
+function deleteHandler(req, res){
+  const SQL = `DELETE FROM watch WHERE symbol=$1`;
+  const params = [req.body.symbol];
+
+  client.query(SQL, params)
+    .then(results =>{
+      res.status(200).redirect('/');
+    })
+    .catch((error) => console.log(error));
 }
+
 //Constructors
 
 function CMC(obj) {//CMC = coinMarketCap
