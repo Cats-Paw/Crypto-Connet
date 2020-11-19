@@ -7,15 +7,15 @@ function chartSetFour() {
     data: {
       datasets: [{
         label: document.getElementById('name').textContent,
-        data: [document.getElementById('7').value, document.getElementById('6').value, document.getElementById('5').value, document.getElementById('4').value, document.getElementById('3').value, document.getElementById('2').value, document.getElementById('1').value, document.getElementById('0').value]
+        data: [document.getElementById('6').value, document.getElementById('5').value, document.getElementById('4').value, document.getElementById('3').value, document.getElementById('2').value, document.getElementById('1').value, document.getElementById('0').value]
       }],
-      labels: ['Day -7', 'Day -6', 'Day -5', 'Day -4', 'Day -3', 'Day -2', 'Day -1', 'Today']
+      labels: ['Day -6', 'Day -5', 'Day -4', 'Day -3', 'Day -2', 'Day -1', 'Today']
     }
   };
 
   let ctx = document.getElementById('detailChart').getContext('2d');
   let myChart = new Chart(ctx, chartObject);
 }
-//console.log(document.getElementById('7').value);
+console.log(document.getElementById('6').value);
 
 chartSetFour();
