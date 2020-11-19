@@ -25,6 +25,8 @@ app.use(methodOverride('_method'));
 app.get('/', homehandler);
 app.post('/search', searchesHandler);
 app.post('/viewDetails/:symbol', detailsHandler);
+app.post('/watchList', watchlistHandler);
+app.get('/watchList', renderWatchListHandler);
 
 // Route Handlers
 function homehandler(req, res) {
@@ -135,6 +137,29 @@ function detailsHandler(req, res) {
     .catch((error) => console.log(error));
 }
 
+function watchlistHandler(req, res){
+  const watchlistAdd = `INSERT INTO watch (symbol) VALUES($1) RETURNING *`;
+  const params = [req.body.symbol];
+  client.query(watchlistAdd, params)
+  .then(results =>{
+       res.status(200).redirect('/');
+  })
+  .catch((error) => console.log(error));
+};
+
+function renderWatchListHandler(req, res){
+const watchListView = `SELECT * FROM watch WHERE id = ${req.params.id}`
+
+client.query(watchListView)
+ .then(results =>{
+  let watchView
+
+
+
+
+  
+})
+}
 //Constructors
 
 function CMC(obj) {//CMC = coinMarketCap
@@ -155,7 +180,6 @@ function News(obj) {
 client.connect()
   .then(() => app.listen(PORT, () => console.log(`Server now listening on port ${PORT}.`)))
   .catch(err => console.log('ERROR:', err));
-
 
 
 

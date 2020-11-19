@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../layout/head') %>
+</head>
+
+<body>
+  <main>
+    <h2>Watchlist</h2>
+   
+    <p id="name"> <%= name %> </p>
+    <canvas id="detailWatchlist"></canvas>
+    <form action="">
+      <% watchlist.forEach((entry,idx) => { %>
+      <input id='<%= idx %>' type="hidden" value="<%= entry %>">
+      <% }) %>
+    </form>
+  </main>
+
+  <footer></footer>
+  <%- include('../layout/publicScript') %>
+</body>
+
+</html>
