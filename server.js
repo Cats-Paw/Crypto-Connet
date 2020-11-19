@@ -136,7 +136,10 @@ function detailsHandler(req, res) {
           totalPrices.push(price[1]);
         });
         console.log(totalPrices);
-        res.status(200).render('pages/details', { chart: totalPrices, name: coinName });
+        if (totalPrices.length > 6) {
+          res.status(200).render('pages/details', { chart: totalPrices, name: coinName });
+        } else { res.status(200).render('pages/error', { name : coinName }); }
+
       }
     })
     .catch((error) => {
