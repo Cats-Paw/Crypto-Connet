@@ -112,20 +112,20 @@ function searchesHandler(req, res) {
         });
         res.status(200).render('./pages/show', { results: searchResults });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        res.status(500).render('pages/searcherror');
+      });
   }
 }
 
 function detailsHandler(req, res) {
-  //console.log('name :', req.body.name); WORKS
-
   const coinName = req.body.name.toLowerCase();
-  console.log('name', coinName);
   let newCoin = coinName.split(' ');
-  console.log('newCoin', newCoin);
   let joinCoin = newCoin.join('-');
-  console.log('joinCoin', joinCoin);
+  const guardian = process.env.the_guardian;
   const API = `https://api.coingecko.com/api/v3/coins/${joinCoin}/market_chart?vs_currency=USD&days=7&interval=daily`;
+  const APInews = `https://content.guardianapis.com/search?q=cryptocurrency%20${coinName}&api-key=${guardian}`;
 
   superagent.get(API)
     .then(results => {
@@ -135,16 +135,24 @@ function detailsHandler(req, res) {
           //console.log('price ', price);
           totalPrices.push(price[1]);
         });
-        console.log(totalPrices);
         if (totalPrices.length > 6) {
-          res.status(200).render('pages/details', { chart: totalPrices, name: coinName });
-        } else { res.status(200).render('pages/error', { name : coinName }); }
-
+          return { chart: totalPrices, name: coinName };
+        } else { res.status(200).render('pages/error', { name: coinName }); }
       }
+    })
+    .then(data => {
+      console.log(data);
+      superagent.get(APInews)
+        .then(news => {
+          let artArr = news.body.response.results.map(article => new News(article));
+          artArr = artArr.slice(0, 3);
+          res.status(200).render('pages/details', { chart : data.chart, name: data.name, news: artArr});
+        })
+        .catch((error) => console.log(error));
     })
     .catch((error) => {
       console.log(error);
-      res.status(200).render('pages/error', { name : coinName });
+      res.status(200).render('pages/error', { name: coinName });
     });
 }
 
@@ -175,12 +183,12 @@ function renderWatchListHandler(req, res) {
     .catch((error) => console.log(error));
 };
 
-function deleteHandler(req, res){
+function deleteHandler(req, res) {
   const SQL = `DELETE FROM watch WHERE symbol=$1`;
   const params = [req.body.symbol];
 
   client.query(SQL, params)
-    .then(results =>{
+    .then(results => {
       res.status(200).redirect('/');
     })
     .catch((error) => console.log(error));
