@@ -18,6 +18,13 @@
       <input id='<%= idx %>' type="hidden" value="<%= entry %>">
       <% }) %>
     </form>
+
+    <% news.forEach( article => { %>
+      <div>
+        <h3> <%= article.headline %></h3>
+        <a href="<%= article.url %>">Click here</a>
+      </div>
+   <% }) %>
   </main>
 
   <footer></footer>
