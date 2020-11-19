@@ -121,12 +121,14 @@ function searchesHandler(req, res) {
 
 function detailsHandler(req, res) {
   const coinName = req.body.name.toLowerCase();
+  const coinSymbol = req.body.symbol;
+  const coin_market_cap = process.env.coin_market_cap;
   let newCoin = coinName.split(' ');
   let joinCoin = newCoin.join('-');
   const guardian = process.env.the_guardian;
   const API = `https://api.coingecko.com/api/v3/coins/${joinCoin}/market_chart?vs_currency=USD&days=7&interval=daily`;
   const APInews = `https://content.guardianapis.com/search?q=cryptocurrency%20${coinName}&api-key=${guardian}`;
-
+  const APIcmc = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?symbol=${coinSymbol}`;
   superagent.get(API)
     .then(results => {
       if (results.body) {
@@ -141,12 +143,25 @@ function detailsHandler(req, res) {
       }
     })
     .then(data => {
-      console.log(data);
       superagent.get(APInews)
         .then(news => {
           let artArr = news.body.response.results.map(article => new News(article));
           artArr = artArr.slice(0, 3);
-          res.status(200).render('pages/details', { chart : data.chart, name: data.name, news: artArr});
+          // res.status(200).render('pages/details', { chart : data.chart, name: data.name, news: artArr});
+          return { chart: data.chart, name: data.name, news: artArr };
+        })
+        .then(info => {
+          superagent.get(APIcmc)
+            .set('X-CMC_PRO_API_KEY', coin_market_cap)
+            .then(coin => {
+              let detailArr = [];
+              let test = coin.body.data;
+              let coinData = test[Object.keys(test)];
+              let coinDetail = new CoinDetails(coinData);
+              detailArr.push(coinDetail);
+              res.status(200).render('pages/details', { chart : info.chart, name: info.name, news:info.news, details: detailArr});
+            })
+            .catch(error => console.log(error));
         })
         .catch((error) => console.log(error));
     })
@@ -202,6 +217,13 @@ function CMC(obj) {//CMC = coinMarketCap
   this.price = obj.quote.USD.price;
   this.dailyChange = obj.quote.USD.percent_change_24h;
   this.weeklyChange = obj.quote.USD.percent_change_7d;
+}
+
+function CoinDetails(obj) {
+  this.disc = obj.description || 'No Description Available';
+  this.icon = obj.logo || 'No logo Available';
+  this.website = (obj.urls.website) ? obj.urls.website : 'No website available';
+  this.reddit = (obj.urls.reddit) ? obj.urls.reddit : 'No Current Reddit Page, Start One?'
 }
 
 function News(obj) {
