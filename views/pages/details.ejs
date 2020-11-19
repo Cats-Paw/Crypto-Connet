@@ -18,6 +18,14 @@
       <input id='<%= idx %>' type="hidden" value="<%= entry %>">
       <% }) %>
     </form>
+    <div class="details">
+      <% details.forEach(coin => { %>
+      <img src="<%= coin.icon %>" alt="">
+      <p> <%= coin.disc %></p>
+      <a href="<%= coin.website %>"> Coin Website</a>
+      <a href="<%= coin.reddit %>"> Coin Reddit</a>
+      <% }) %>
+    </div>
 
     <% news.forEach( article => { %>
       <div>
