@@ -112,7 +112,10 @@ function searchesHandler(req, res) {
         });
         res.status(200).render('./pages/show', { results: searchResults });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        res.status(500).render('pages/searcherror');
+      });
   }
 }
 
@@ -138,13 +141,13 @@ function detailsHandler(req, res) {
         console.log(totalPrices);
         if (totalPrices.length > 6) {
           res.status(200).render('pages/details', { chart: totalPrices, name: coinName });
-        } else { res.status(200).render('pages/error', { name : coinName }); }
+        } else { res.status(200).render('pages/error', { name: coinName }); }
 
       }
     })
     .catch((error) => {
       console.log(error);
-      res.status(200).render('pages/error', { name : coinName });
+      res.status(200).render('pages/error', { name: coinName });
     });
 }
 
@@ -175,12 +178,12 @@ function renderWatchListHandler(req, res) {
     .catch((error) => console.log(error));
 };
 
-function deleteHandler(req, res){
+function deleteHandler(req, res) {
   const SQL = `DELETE FROM watch WHERE symbol=$1`;
   const params = [req.body.symbol];
 
   client.query(SQL, params)
-    .then(results =>{
+    .then(results => {
       res.status(200).redirect('/');
     })
     .catch((error) => console.log(error));
