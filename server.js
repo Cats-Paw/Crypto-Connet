@@ -121,9 +121,13 @@ function detailsHandler(req, res) {
 
   const coinName = req.body.name.toLowerCase();
   console.log('name', coinName);
-  const API = `https://api.coingecko.com/api/v3/coins/${coinName}/market_chart?vs_currency=USD&days=7&interval=daily`;
+  let newCoin = coinName.split(' ');
+  console.log('newCoin', newCoin);
+  let joinCoin = newCoin.join('-');
+  console.log('joinCoin', joinCoin);
+  const API = `https://api.coingecko.com/api/v3/coins/${joinCoin}/market_chart?vs_currency=USD&days=7&interval=daily`;
 
-  superagent(API)
+  superagent.get(API)
     .then(results => {
       if (results.body) {
         let totalPrices = [];
@@ -133,9 +137,12 @@ function detailsHandler(req, res) {
         });
         console.log(totalPrices);
         res.status(200).render('pages/details', { chart: totalPrices, name: coinName });
-      } else { console.log('No price data'); }
+      }
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+      res.status(200).render('pages/error', { name : coinName });
+    });
 }
 
 function watchlistHandler(req, res) {
@@ -148,7 +155,7 @@ function watchlistHandler(req, res) {
       res.status(200).redirect('/');
     })
     .catch((error) => console.log(error));
-};
+}
 
 function renderWatchListHandler(req, res) {
   const watchListView = `SELECT * FROM watch`;
