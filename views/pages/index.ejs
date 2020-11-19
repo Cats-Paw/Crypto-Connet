@@ -2,40 +2,35 @@
 <html lang="en">
 
 <head>
-    <%- include('../layout/head') %>
+  <%- include('../layout/head') %>
 </head>
 
 <body>
   <nav>
-    <div id="myNavBar" class="navBar">
-      <a href="#">Home</a>
-      <a href='/watchList'> Watchlist</a>
-  </div>
-  </nav>
     <header>
-     <%- include('../layout/header')%> 
+      <%- include('../layout/header')%>
     </header>
     <main>
       <h2>test</h2>
-    <%- include ('../searches/form') %>
-    <canvas id='cryptoOne'></canvas>
-    <canvas id='cryptoTwo'></canvas>
-    <canvas id='cryptoThree'></canvas>
-    <form action="">
-      <% chartdata.forEach( (dataSet,ind) => { %>
+      <%- include ('../searches/form') %>
+      <canvas id='cryptoOne'></canvas>
+      <canvas id='cryptoTwo'></canvas>
+      <canvas id='cryptoThree'></canvas>
+      <form action="">
+        <% chartdata.forEach( (dataSet,ind) => { %>
         <% dataSet.forEach((entry,idx) => { %>
         <input id='<%= ind %><%= idx %>' type="hidden" value="<%= entry %>">
         <% }) %>
-       <% }) %>
-    
-    </form>
-    <h2>Crypto Currency News</h2>
-    <% newsData.forEach( article => { %>
+        <% }) %>
+
+      </form>
+      <h2>Crypto Currency News</h2>
+      <% newsData.forEach( article => { %>
       <div>
         <h3> <%= article.headline %></h3>
         <a href="<%= article.url %>">Click here</a>
       </div>
-   <% }) %>
+      <% }) %>
     </main>
     <footer></footer>
     <%- include('../layout/publicScript') %>

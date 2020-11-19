@@ -5,6 +5,9 @@
   <%- include('../layout/head') %>
 </head>
 
+<header>
+  <%- include('../layout/header') %>
+</header>
 <body>
   <main>
     <h2>More Details</h2>
@@ -15,6 +18,18 @@
       <input id='<%= idx %>' type="hidden" value="<%= entry %>">
       <% }) %>
     </form>
+    <form class="save_form" action="/watchList" method="POST">
+      <input type="hidden" name="name" value="<%= name %>">
+      <input type="hidden" name="symbol" value="<%= symbol %>">
+      <button class="save_button" type="submit">Add to watchlist</button>
+    </form>
+    <% news.forEach( article => { %>
+      <div>
+        <h3> <%= article.headline %></h3>
+        <a href="<%= article.url %>">Click here</a>
+      </div>
+      <% }) %>
+
   </main>
 
   <footer></footer>

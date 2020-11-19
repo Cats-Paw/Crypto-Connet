@@ -14,6 +14,7 @@
       <p> Coin Price: <%= coin.price %> </p>
       <form class="view_details" action="/viewDetails/<%= coin.symbol %>" method="POST">
         <input type="hidden" name="name" value="<%= coin.name %>">
+        <input type="hidden" name="symbol" value="<%= coin.symbol %>">
         <button class="save_button" type="submit">View Details</button>
       </form>
       <form class="save_form" action="/watchList" method="POST">

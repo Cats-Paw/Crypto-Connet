@@ -72,9 +72,9 @@ function homehandler(req, res) {
       superagent.get(APItwo)
         .then(data => {
           let NewsArr = data.body.response.results.map(article => new News(article));
-          NewsArr = NewsArr.slice(0,3);
+          NewsArr = NewsArr.slice(0, 3);
           console.log(NewsArr);
-          res.status(200).render('pages/index', { chartdata: chart , newsData:NewsArr});
+          res.status(200).render('pages/index', { chartdata: chart, newsData: NewsArr });
         })
         .catch((error) => console.log(error));
     })
@@ -119,46 +119,58 @@ function detailsHandler(req, res) {
   //console.log('name :', req.body.name); WORKS
 
   const coinName = req.body.name.toLowerCase();
-  console.log('name', coinName);
+  console.log(coinName);
+  const coinSymbol = req.body.symbol;
   const API = `https://api.coingecko.com/api/v3/coins/${coinName}/market_chart?vs_currency=USD&days=7&interval=daily`;
-
-  superagent(API)
+  const guardian = process.env.the_guardian;
+  const APItwo = `https://content.guardianapis.com/search?q=${coinName}&api-key=${guardian}`;
+  superagent.get(API)
     .then(results => {
-      if (results.body) {
+      if (results.body.prices) {
         let totalPrices = [];
         results.body.prices.forEach(price => {
           //console.log('price ', price);
           totalPrices.push(price[1]);
         });
-        console.log(totalPrices);
-        res.status(200).render('pages/details', { chart : totalPrices, name : coinName });
-      } else { console.log('No price data'); }
+        return { chart: totalPrices, name: coinName, symbol: coinSymbol };
+      }
+      else { res.status(400).send('No Data Available'); }
+    })
+    .then(data => {
+      console.log(data);
+      superagent.get(APItwo)
+        .then(reply => {
+          let detArticles = reply.body.response.results.map(art => new News(art));
+          detArticles = detArticles.slice(0,3);
+          res.status(200).render('pages/details', { chart : data.chart, name: data.name, symbol: data.symbol, news: detArticles});
+        })
+        .catch((error) => console.log(error));
     })
     .catch((error) => console.log(error));
 }
 
-function watchlistHandler(req, res){
+function watchlistHandler(req, res) {
   const watchlistAdd = `INSERT INTO watch (symbol) VALUES($1) RETURNING *`;
   const params = [req.body.symbol];
   client.query(watchlistAdd, params)
-  .then(results =>{
-       res.status(200).redirect('/');
-  })
-  .catch((error) => console.log(error));
+    .then(results => {
+      res.status(200).redirect('/');
+    })
+    .catch((error) => console.log(error));
 };
 
-function renderWatchListHandler(req, res){
-const watchListView = `SELECT * FROM watch WHERE id = ${req.params.id}`
+function renderWatchListHandler(req, res) {
+  const watchListView = `SELECT * FROM watch WHERE id = ${req.params.id}`
 
-client.query(watchListView)
- .then(results =>{
-  let watchView
-
-
+  client.query(watchListView)
+    .then(results => {
+      let watchView
 
 
-  
-})
+
+
+
+    })
 }
 //Constructors
 
@@ -170,6 +182,15 @@ function CMC(obj) {//CMC = coinMarketCap
   this.weeklyChange = obj.quote.USD.percent_change_7d;
 }
 
+function Details(obj) {
+  this.rate = obj.rate;
+  this.high = obj.high;
+  this.low = obj.low;
+  this.volume = obj.vol;
+  this.marCap = obj.cap;
+  this.change = obj.change;
+
+}
 function News(obj) {
   this.headline = obj.webTitle;
   this.url = obj.webUrl;
