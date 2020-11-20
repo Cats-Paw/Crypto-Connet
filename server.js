@@ -87,6 +87,7 @@ function searchesHandler(req, res) {
 
   const minSearch = req.body.min_search;
   const maxSearch = req.body.max_search;
+
   const ascOrDesc = req.body.ascOrDesc;
   let ascOrDescAPI = '';
 
@@ -96,8 +97,7 @@ function searchesHandler(req, res) {
   else if (ascOrDesc === 'desc') {
     ascOrDescAPI = ascOrDesc;
   }
-
-  if (minSearch > maxSearch) {
+  if (parseInt(minSearch) > parseInt(maxSearch)) {
     res.redirect('/');
   } else {
     const API = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=6&price_min=${minSearch}&price_max=${maxSearch}&sort=price&sort_dir=${ascOrDescAPI}`;
@@ -159,7 +159,7 @@ function detailsHandler(req, res) {
               let coinData = test[Object.keys(test)];
               let coinDetail = new CoinDetails(coinData);
               detailArr.push(coinDetail);
-              res.status(200).render('pages/details', { chart : info.chart, name: info.name, news:info.news, details: detailArr});
+              res.status(200).render('pages/details', { chart: info.chart, name: info.name, news: info.news, details: detailArr });
             })
             .catch(error => console.log(error));
         })
@@ -190,13 +190,9 @@ function renderWatchListHandler(req, res) {
     .then(results => {
       let watchView = results.rows;
       res.status(200).render('pages/watchlist', { results: watchView });
-
-
-
-
     })
     .catch((error) => console.log(error));
-};
+}
 
 function deleteHandler(req, res) {
   const SQL = `DELETE FROM watch WHERE symbol=$1`;
@@ -223,7 +219,7 @@ function CoinDetails(obj) {
   this.disc = obj.description || 'No Description Available';
   this.icon = obj.logo || 'No logo Available';
   this.website = (obj.urls.website) ? obj.urls.website : 'No website available';
-  this.reddit = (obj.urls.reddit) ? obj.urls.reddit : 'No Current Reddit Page, Start One?'
+  this.reddit = (obj.urls.reddit) ? obj.urls.reddit : 'No Current Reddit Page, Start One?';
 }
 
 function News(obj) {

@@ -2,15 +2,16 @@
 <html lang="en">
 
 <head>
-    <%- include('../layout/head') %>
+  <%- include('../layout/head') %>
 </head>
 
 <body>
-  <header>
-    <%- include('../layout/header')%> 
-   </header>
-  <h2>Showing the results</h2>
-  <% results.forEach(coin => { %>
+  <main>
+    <header>
+      <h1>Showing the results</h1>
+      <%- include('../layout/header')%>
+    </header>
+    <% results.forEach(coin => { %>
     <div class="shown_result">
       <h3> Coin Name: <%= coin.name %> </h3>
       <p> Coin Symbol: <%= coin.symbol %> </p>
@@ -26,9 +27,11 @@
         <button class="save_button" type="submit">Add to watchlist</button>
       </form>
     </div>
-  <% }) %>
-  <footer></footer>
-    <%- include('../layout/publicScript') %>
-    <%- include('../layout/footer') %>
+    <% }) %>
+  </main>
+
+  <footer><%- include('../layout/footer') %></footer>
+  <%- include('../layout/publicScript') %>
 </body>
+
 </html>
