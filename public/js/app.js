@@ -92,6 +92,20 @@ function chartSetThree() {
   let myChart = new Chart(ctx, chartObject);
 }
 
+const modal = document.getElementById('modal');
+const modalButton = document.getElementById('searchButton');
+const closeButton = document.getElementById('close');
+
+modalButton.onclick = function (event) {
+  modal.style.display = ' block ';
+};
+
+closeButton.onclick = function (event) {
+  modal.style.display = ' none ';
+};
+
+
+
 chartSetOne();
 chartSetTwo();
 chartSetThree();
