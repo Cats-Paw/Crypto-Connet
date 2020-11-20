@@ -60,17 +60,44 @@ a:hover {
 
 /* form styles */
 
-.to_hide {
+#modal {
   display: none;
+  position:fixed;
+  z-index:1;
+  left:16vw;
+  top:14vh;
+  width:70vw;
+  height:45vh;
+  background-color:rgba(0,0,0,.9);
+}
+#modal button {
+  width: 50vw;
+  height:4vh;
+  background-color: #534d4A ;
+  color:#2a7025;
+  transition-duration: .7s;
+}
+
+#modal button:hover {
+  width: 50.5vw;
+  height: 4.2vh;
+  background-color:#2a7025 ;
+  color: #534d4A ;
+  transition-duration: .7s;
 }
 
 legend, label {
   color: rgb(168, 167, 167);
+  font-size: 1.5em;
+  padding-top: .4em;
 }
 
 .search_query {
   width: 40vw;
+  height: 6vh;
+  margin-top: 3vh;
   background-color: #534d4A;
+  font-size: 2em;
 }
 
 /* graphs styles */

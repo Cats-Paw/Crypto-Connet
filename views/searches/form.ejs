@@ -1,10 +1,10 @@
-<section class="to_hide">
+<section id="modal">
   <form action="/search" method="POST">
     <fieldset>
       <legend>Enter your min and max search amount here:</legend>
-        <input class="search_query" type="number" value="min_search" name="min_search" placeholder="Min Amount">
+        <input class="search_query" type="number" value="min_search" name="min_search" placeholder="Min">
       <br>
-        <input class="search_query" type="number" value="max_search" name="max_search" placeholder="Max Amount">
+        <input class="search_query" type="number" value="max_search" name="max_search" placeholder="Max">
         <br>
       <label for="ascOrDesc"> Ascending
         <input class="radio_query" type="radio" value="asc" name="ascOrDesc">
@@ -17,4 +17,5 @@
       <button type="submit">Submit</button>
     </fieldset>
   </form>
+  <button id='close' > Close </button>
 </section>
