@@ -6,11 +6,11 @@
 </head>
 
 <body>
-  <header>
-    <%- include('../layout/header')%> 
-   </header>
   <main>
-    <h2>More Details</h2>
+    <header>
+      <h1>More Details</h1>
+      <%- include('../layout/header')%>
+    </header>
     <p id="name"> <%= name %> </p>
     <canvas id="detailChart"></canvas>
     <form action="">
@@ -28,16 +28,15 @@
     </div>
 
     <% news.forEach( article => { %>
-      <div>
-        <h3> <%= article.headline %></h3>
-        <a href="<%= article.url %>">Click here</a>
-      </div>
-   <% }) %>
+    <div>
+      <h3> <%= article.headline %></h3>
+      <a href="<%= article.url %>">Click here</a>
+    </div>
+    <% }) %>
   </main>
 
-  <footer></footer>
+  <footer><%- include('../layout/footer') %></footer>
   <%- include('../layout/publicScript') %>
-  <%- include('../layout/footer') %>
 </body>
 
 </html>

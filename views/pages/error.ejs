@@ -6,19 +6,19 @@
 </head>
 
 <body>
-  <header>
-    <%- include('../layout/header')%> 
-   </header>
   <main>
-    <h2>Error Page</h2>
+    <header>
+      <h1>Error Page</h1>
+      <%- include('../layout/header')%>
+    </header>
     <p>
       We're sorry there was no details to show for this coin: <%= name %>
     </p>
   </main>
 
-  <footer></footer>
+  <footer><%- include('../layout/footer') %></footer>
+
   <%- include('../layout/publicScript') %>
-  <%- include('../layout/footer') %>
 </body>
 
 </html>

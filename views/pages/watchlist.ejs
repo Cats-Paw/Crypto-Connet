@@ -7,7 +7,10 @@
 
 <body>
   <main>
-    <h2>Watchlist</h2>
+    <header>
+      <h1>Watchlist</h1>
+      <%- include('../layout/header')%>
+    </header>
     <% results.forEach(coin => { %>
     <div class="shown_result">
       <h3> Coin Name: <%= coin.name %> </h3>
@@ -24,9 +27,8 @@
     <% }) %>
   </main>
 
-  <footer></footer>
+  <footer><%- include('../layout/footer') %></footer>
   <%- include('../layout/publicScript') %>
-  <%- include('../layout/footer') %>
 </body>
 
 </html>
