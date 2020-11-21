@@ -12,16 +12,19 @@
       <%- include('../layout/header')%>
     </header>
     <% results.forEach(coin => { %>
+      <% console.log(coin) %>
     <div class="shown_result">
-      <h3> Coin Name: <%= coin.name %> </h3>
+      <h3> Coin Name: <%= coin.title %> </h3>
       <p> Coin Symbol: <%= coin.symbol %> </p>
       <form class="view_details" action="/viewDetails/<%= coin.symbol %>" method="POST">
-        <input type="hidden" name="name" value="<%= coin.name %>">
+        <input type="hidden" name="name" value="<%= coin.title %>">
+        <input type="hidden" name="symbol"
+        value="<%= coin.symbol %>">
         <button class="save_button" type="submit">View Details</button>
       </form>
       <form class="delete_form" action="/delete/<%= coin.symbol %> ?_method=DELETE" method="POST">
         <input type="hidden" name="symbol" value="<%= coin.symbol %>">
-        <button class="delete_button" type="submit">Remove from watchlist</button>
+        <button class="save_button" type="submit">Remove from watchlist</button>
       </form>
     </div>
     <% }) %>
