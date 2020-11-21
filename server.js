@@ -104,15 +104,15 @@ function searchesHandler(req, res) {
     let number = req.body.number ? req.body.number : 1;
     let limit = 6;
     let start = (( number ) * limit);
-    console.log('number', number);
-    console.log('start', start);
+    // console.log('number', number);
+    // console.log('start', start);
 
     const API = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=6&price_min=${minSearch}&price_max=${maxSearch}&sort=price&sort_dir=${ascOrDescAPI}&start=${start}`;
 
     const coin_market_cap = process.env.coin_market_cap;
 
     number++;
-    console.log('number again', number);
+    //console.log('number again', number);
 
     superagent.get(API)
       .set('X-CMC_PRO_API_KEY', coin_market_cap)

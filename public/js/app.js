@@ -78,7 +78,7 @@ function chartSetTwo() {
             fontColor: 'rgb(134, 233, 127)',
             fontFamily: 'Goldman',
             fontSize: 15
-          }
+          },
         }],
       }
     }
