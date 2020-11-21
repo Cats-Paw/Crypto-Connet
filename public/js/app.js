@@ -22,12 +22,20 @@ function chartSetOne() {
         }
       },
       scales: {
-        display: true,
-        yAxes: {
-          labels: {
-            fontColor: 'rgb(134, 233, 127)'
+        xAxes: [{
+          ticks: {
+            fontColor: 'rgb(134, 233, 127)',
+            fontFamily: 'Goldman',
+            fontSize: 15
           }
-        }
+        }],
+        yAxes: [{
+          ticks: {
+            fontColor: 'rgb(134, 233, 127)',
+            fontFamily: 'Goldman',
+            fontSize: 15
+          }
+        }],
       }
     }
   };
@@ -56,6 +64,22 @@ function chartSetTwo() {
           fontFamily: 'Goldman',
           fontSize: 20
         }
+      },
+      scales: {
+        xAxes: [{
+          ticks: {
+            fontColor: 'rgb(134, 233, 127)',
+            fontFamily: 'Goldman',
+            fontSize: 15
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            fontColor: 'rgb(134, 233, 127)',
+            fontFamily: 'Goldman',
+            fontSize: 15
+          }
+        }],
       }
     }
   };
@@ -84,6 +108,22 @@ function chartSetThree() {
           fontFamily: 'Goldman',
           fontSize: 20
         }
+      },
+      scales: {
+        xAxes: [{
+          ticks: {
+            fontColor: 'rgb(134, 233, 127)',
+            fontFamily: 'Goldman',
+            fontSize: 15
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            fontColor: 'rgb(134, 233, 127)',
+            fontFamily: 'Goldman',
+            fontSize: 15
+          }
+        }],
       }
     }
   };
