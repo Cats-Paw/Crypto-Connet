@@ -28,6 +28,13 @@
       </form>
     </div>
     <% }) %>
+    <form action="/search" method="POST">
+      <input type="hidden" name="min" value="<%= min %>">
+      <input type="hidden" name="max" value="<%= max %>">
+      <input type="hidden" name="aOrD" value="<%= aOrD %>">
+      <input type="hidden" name="number" value="<%= num %>">
+      <button type="submit">More</button>
+    </form>
     <footer><%- include('../layout/footer') %></footer>
   </main>
 

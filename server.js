@@ -85,10 +85,10 @@ function homehandler(req, res) {
 function searchesHandler(req, res) {
   //console.log('req.body.min_search', req.body.min_search);
 
-  const minSearch = req.body.min_search;
-  const maxSearch = req.body.max_search;
+  const minSearch = req.body.min_search || req.body.min;
+  const maxSearch = req.body.max_search ||req.body.max;
 
-  const ascOrDesc = req.body.ascOrDesc;
+  const ascOrDesc = req.body.ascOrDesc || req.body.aOrD;
   let ascOrDescAPI = '';
 
   if (ascOrDesc === 'asc') {
@@ -100,8 +100,19 @@ function searchesHandler(req, res) {
   if (parseInt(minSearch) > parseInt(maxSearch)) {
     res.redirect('/');
   } else {
-    const API = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=6&price_min=${minSearch}&price_max=${maxSearch}&sort=price&sort_dir=${ascOrDescAPI}`;
+
+    let number = req.body.number ? req.body.number : 1;
+    let limit = 6;
+    let start = (( number ) * limit);
+    console.log('number', number);
+    console.log('start', start);
+
+    const API = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=6&price_min=${minSearch}&price_max=${maxSearch}&sort=price&sort_dir=${ascOrDescAPI}&start=${start}`;
+
     const coin_market_cap = process.env.coin_market_cap;
+
+    number++;
+    console.log('number again', number);
 
     superagent.get(API)
       .set('X-CMC_PRO_API_KEY', coin_market_cap)
@@ -110,7 +121,7 @@ function searchesHandler(req, res) {
           //console.log('prices', prices.quote.USD.price); WORKS
           return new CMC(prices);
         });
-        res.status(200).render('./pages/show', { results: searchResults });
+        res.status(200).render('./pages/show', { results: searchResults, min : minSearch, max : maxSearch, aOrD : ascOrDescAPI, num : number });
       })
       .catch((error) => {
         console.log(error);
