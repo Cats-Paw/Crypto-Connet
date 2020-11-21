@@ -27,7 +27,6 @@ header {
 
 h1 {
   font-size: 1.7em;
-  
   color: #86E97F;
   margin-top: .5em;
   margin-bottom: .5em;
@@ -129,7 +128,7 @@ h2 {
 
 .article{
   width: 45vw;
-  font-size: .9em;
+  font-size: 1em;
   color: #2a7025;
   margin-bottom: .9em;
 }
@@ -154,6 +153,10 @@ footer {
   color: #86E97F;
 
   bottom:0;
+}
+
+.article h3 {
+  margin-bottom: 10px;
 }
 
 /* Detail view styles */
