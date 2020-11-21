@@ -129,6 +129,9 @@ function detailsHandler(req, res) {
   const API = `https://api.coingecko.com/api/v3/coins/${joinCoin}/market_chart?vs_currency=USD&days=7&interval=daily`;
   const APInews = `https://content.guardianapis.com/search?q=cryptocurrency%20${coinName}&api-key=${guardian}`;
   const APIcmc = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?symbol=${coinSymbol}`;
+  console.log(API);
+  console.log(APInews);
+  console.log(APIcmc);
   superagent.get(API)
     .then(results => {
       if (results.body) {
@@ -166,16 +169,17 @@ function detailsHandler(req, res) {
         .catch((error) => console.log(error));
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
       res.status(200).render('pages/error', { name: coinName });
     });
 }
 
 function watchlistHandler(req, res) {
-  const watchlistAdd = `INSERT INTO watch (symbol, name) VALUES($1, $2)`;
+  const watchlistAdd = `INSERT INTO watch (symbol, title) VALUES($1, $2)`;
   const symbol = req.body.symbol;
   const name = req.body.name;
   const params = [symbol, name];
+  console.log(req.body);
   client.query(watchlistAdd, params)
     .then(results => {
       res.status(200).redirect('/');
@@ -220,6 +224,8 @@ function CoinDetails(obj) {
   this.icon = obj.logo || 'No logo Available';
   this.website = (obj.urls.website) ? obj.urls.website : 'No website available';
   this.reddit = (obj.urls.reddit) ? obj.urls.reddit : 'No Current Reddit Page, Start One?';
+  this.name = obj.name;
+  this.symbol = obj.symbol;
 }
 
 function News(obj) {

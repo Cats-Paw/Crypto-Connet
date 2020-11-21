@@ -15,15 +15,26 @@
     <canvas id="detailChart"></canvas>
     <form action="">
       <% chart.forEach((entry,idx) => { %>
+         <% console.log(entry) %>
       <input id='<%= idx %>' type="hidden" value="<%= entry %>">
       <% }) %>
     </form>
     <div class="details">
       <% details.forEach(coin => { %>
+        <% console.log(coin) %>
       <img src="<%= coin.icon %>" alt="">
-      <p> <%= coin.disc %></p>
+      <p id='disc'> <%= coin.disc %></p>
+      <br>
+      <div id="links">
       <a href="<%= coin.website %>"> Coin Website</a>
+      <br>
       <a href="<%= coin.reddit %>"> Coin Reddit</a>
+      </div>
+      <form class="save_form" action="/watchList" method="POST">
+        <input type="hidden" name="name" value="<%= coin.name %>">
+        <input type="hidden" name="symbol" value="<%= coin.symbol %>">
+        <button class="save_button" type="submit">Add to watchlist</button>
+      </form>
       <% }) %>
     </div>
 
