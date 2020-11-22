@@ -28,6 +28,7 @@ app.post('/viewDetails/:symbol', detailsHandler);
 app.post('/watchList', watchlistHandler);
 app.get('/renderWatchList', renderWatchListHandler);
 app.delete('/delete/:symbol', deleteHandler);
+app.get('/renderAboutUs', aboutUsHandler);
 
 // Route Handlers
 function homehandler(req, res) {
@@ -218,6 +219,10 @@ function deleteHandler(req, res) {
       res.status(200).redirect('/');
     })
     .catch((error) => console.log(error));
+}
+
+function aboutUsHandler(req, res) {
+  res.status(200).render('pages/aboutUs');
 }
 
 //Constructors
