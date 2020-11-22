@@ -2,6 +2,7 @@
   text-align: center;
   font-family: 'Goldman', cursive;
 }
+
 body {
   background-color: #1d1715;
   display:flex;
@@ -44,6 +45,7 @@ ul {
 li {
   display:  inline;
   padding: .2em;
+  margin-right: 5px;
 }
 
 a {
@@ -102,6 +104,12 @@ legend, label {
   font-size: 2em;
 }
 
+.view_details, .save_form {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+
 /* graphs styles */
 .home_graphs {
   width: 90vw;
@@ -138,6 +146,7 @@ h2 {
 }
 
 footer {
+  font-family: 'Goldman', cursive;
   margin-top: auto;
   background-color: black;
   height: 3vh;
@@ -170,7 +179,7 @@ footer {
 }
 
 div#links  {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 /* Search Show page */
@@ -183,9 +192,12 @@ div.shown_result {
 }
 
 button.save_button {
+
+  height: 3em;
   background-color: black;
   color: #2a7025;
   transition-duration: .7s;
+  margin-bottom: 10px;
 }
 
 button.save_button:hover {
@@ -198,10 +210,61 @@ button#more {
   color: black;
   background-color: #2a7025;
   transition-duration: .7s;
+  width: 100vw;
 }
 
 button#more:hover {
   background-color: black;
   color: #2a7025;
   transition-duration: .7s;
+}
+
+/* Error page style */
+
+#error_page {
+  color: #86E97F;
+  margin-top: 1em;
+}
+
+/* About us styles */
+
+#org h3 {
+  font-size: 2em;
+  color: #86E97F;
+  margin-bottom: .2em;
+  margin-top: 10px;
+}
+#org p {
+  font-size: 1em;
+  color: #2a7025;
+}
+
+#org p:last-child {
+  margin-bottom: 20px;
+}
+
+.bio h3 {
+  font-size: 1.5em;
+  color: #86E97F;
+  margin-bottom: .5em;
+  /* float: left; */
+}
+
+.bio p {
+  font-size: 1em;
+  color: #2a7025;
+  margin-bottom: .5em;
+}
+
+#left {
+  float: right;
+}
+
+.bio img {
+  float: left;
+  border: 1px solid #ddd;
+  padding: 5px;
+  border-radius: 15px;
+  width: 120px;
+  margin-bottom: 20px;
 }
