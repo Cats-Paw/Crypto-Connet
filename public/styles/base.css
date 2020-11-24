@@ -234,6 +234,7 @@ button#more:hover {
   margin-bottom: .2em;
   margin-top: 10px;
 }
+
 #org p {
   font-size: 1em;
   color: #2a7025;
@@ -246,8 +247,15 @@ button#more:hover {
 .bio h3 {
   font-size: 1.5em;
   color: #86E97F;
-  margin-bottom: .5em;
   /* float: left; */
+}
+
+#jae {
+  margin-bottom: 15px;
+}
+
+#jae_img {
+  margin-bottom: 80px;
 }
 
 .bio p {
@@ -258,6 +266,7 @@ button#more:hover {
 
 #left {
   float: right;
+  margin-bottom: 50px;
 }
 
 .bio img {
