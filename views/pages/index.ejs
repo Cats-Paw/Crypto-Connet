@@ -2,45 +2,40 @@
 <html lang="en">
 
 <head>
-  <%- include('../layout/head') %>
+    <%- include('../layout/head') %>
 </head>
 
 <body>
+  
   <main>
     <header>
-      <h1>CRYPTO-CONNECT!</h1>
-      <%- include('../layout/header')%>
+      <h2>CRYPTO-CONNECT!</h2>
+     <%- include('../layout/header')%> 
     </header>
+        
     <%- include ('../searches/form') %>
-    <h2 id="popular">Popular Crypto Currencies </h2>
-    <div class="home_graphs">
-      <canvas id='cryptoOne'></canvas>
-    </div>
-    <div class="home_graphs">
-      <canvas class="home_graphs" id='cryptoTwo'></canvas>
-    </div>
-    <div class="home_graphs">
-      <canvas class="home_graphs" id='cryptoThree'></canvas>
-    </div>
+    <canvas id='cryptoOne'></canvas>
+    <canvas id='cryptoTwo'></canvas>
+    <canvas id='cryptoThree'></canvas>
     <form action="">
       <% chartdata.forEach( (dataSet,ind) => { %>
-      <% dataSet.forEach((entry,idx) => { %>
-      <input id='<%= ind %><%= idx %>' type="hidden" value="<%= entry %>">
-      <% }) %>
-      <% }) %>
-
+        <% dataSet.forEach((entry,idx) => { %>
+        <input id='<%= ind %><%= idx %>' type="hidden" value="<%= entry %>">
+        <% }) %>
+       <% }) %>
+    
     </form>
-    <h2 id="news">Crypto Currency News</h2>
+    <h2>Crypto Currency News</h2>
     <% newsData.forEach( article => { %>
-    <div class="article">
-      <h3> <%= article.headline %></h3>
-      <a href="<%= article.url %>">Click here</a>
-    </div>
-    <% }) %>
-    <footer><%- include('../layout/footer') %></footer>
-  </main>
-
-  <%- include('../layout/publicScript') %>
+      <div>
+        <h3> <%= article.headline %></h3>
+        <a href="<%= article.url %>">Click here</a>
+      </div>
+   <% }) %>
+    </main>
+    <footer></footer>
+    <%- include('../layout/publicScript') %>
+    <%- include('../layout/footer') %>
 </body>
 
 </html>
