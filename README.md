@@ -1,4 +1,7 @@
-# Crypto-Connet
+# Crypto-Connect
+
+## Updated with React, Next js, Django REST framework:
+github.com/Team-JLAB
 
 ## Authors: 
 - Brandon Gonzalez
